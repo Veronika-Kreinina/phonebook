@@ -1,0 +1,45 @@
+tags:
+  - Auth
+security: []
+summary: Confirm OAuth
+operationId: confirmOauth
+description: Validate code from Google and log in or register user
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            type: string
+            example: 4/0Ab_5qlmVeG6ebS3piS1wM2WsobIyzgZRO-Sv9foN8f04LXzGfRpN1gC11i0CzV2aCBlQ2A
+responses:
+  '200':
+    description: Google OAuth confirmed
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully refreshed a session!
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: sr9r/0qMg4FsrB+SyYl5rxNpQ7Lu91Hk3yX5pTbq
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

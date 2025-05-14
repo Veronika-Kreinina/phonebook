@@ -1,0 +1,88 @@
+tags:
+  - Contacts
+summary: Upsert a contact (create or update)
+operationId: upsertContact
+description: |
+  Creates a new contact or updates an existing one based on the provided ID.
+  This is an "upsert" operation: if the contact doesn't exist, it will be created.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+    example: 661a2cd3c991f1a9fba1dce1
+    description: The ID of the contact to create or update
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Contact's  name
+            example: Alice Johnson
+          email:
+            type: string
+            description: Contact's  email
+            format: email
+            example: alice.johnson@example.com
+          phoneNumber:
+            type: string
+            description: Contact's phone number
+            example: '+380000000001'
+          contactType:
+            type: string
+            description: Contact's type
+            enum: [work, home, personal]
+            example: home
+          isFavourite:
+            type: boolean
+            description: Contact's priority
+            example: false
+          photo:
+            type: string
+            description: Contact's photo
+            format: binary
+responses:
+  '200':
+    description: Contact updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              $ref: '../../../components/schemas/contacts.yaml'
+  '201':
+    description: Contact created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              $ref: '../../../components/schemas/contacts.yaml'
+  '401':
+    description: Unauthorized
+    $ref: ../../../components/responses/401.yaml
+
+  '500':
+    description: Internal Server Error
+    $ref: ../../../components/responses/500.yaml

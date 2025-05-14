@@ -1,0 +1,19 @@
+description: Conflict
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 409
+        message:
+          type: string
+          example: Conflict
+        data:
+          type: string
+          example: Task locked. Cannot start a new automation since job is already running

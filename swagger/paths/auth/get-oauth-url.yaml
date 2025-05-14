@@ -1,0 +1,67 @@
+tags:
+  - Auth
+security: []
+summary: Confirm OAuth
+operationId: confirmOAuth
+description: Validate authorization code from Google and log in or register the user
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            type: string
+            description: Authorization code received from Google
+            example: '4/0AY0e-g6EXAMPLECODE'
+responses:
+  '200':
+    description: Google OAuth confirmed, session created
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully authenticated with Google OAuth!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  example: 'jwt.token.here'
+  '400':
+    description: Missing or invalid authorization code
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Authorization code is required
+            data:
+              type: object
+              example: {}
+  '500':
+    $ref: '../../components/responses/500.yaml'

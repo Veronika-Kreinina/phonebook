@@ -1,0 +1,51 @@
+type: object
+required:
+  - _id
+  - userId
+  - name
+  - phone
+  - contactType
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: Contact's id
+    example: '661a2cd3c991f1a9fba1dce1'
+  userId:
+    type: string
+    description: Contact's crestor  id
+    example: '661a2cbfc991f1a9fba1dcdb'
+  name:
+    type: string
+    description: Contact's name
+    example: John Doe
+  email:
+    type: string
+    description: Contact's email
+    example: john.doe@example.com
+  phoneNumber:
+    type: string
+    description: Contact's phone number
+    example: '+380000000001'
+  contactType:
+    type: string
+    description: Contact's type
+    enum: [work, home, personal]
+    example: personal
+  isFavourite:
+    type: boolean
+    description: Contact's priority
+    example: false
+  photo:
+    type: string
+    description: Contact's photo
+    example: https://res.cloudinary.com/.../photo.jpg
+  createdAt:
+    type: string
+    format: date-time
+    example: 2025-04-01T10:22:30.000Z
+  updatedAt:
+    type: string
+    format: date-time
+    example: 2025-04-01T10:22:30.000Z

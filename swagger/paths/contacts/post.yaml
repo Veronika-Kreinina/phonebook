@@ -1,0 +1,70 @@
+tags:
+  - Contacts
+summary: Add a new contact
+operationId: addContact
+description: Creates a new contact for the authenticated user. A photo can be uploaded
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+          - contactType
+        properties:
+          name:
+            type: string
+            description: Contact's  name
+            example: Alice Johnson
+          email:
+            type: string
+            description: Contact's  email
+            format: email
+            example: alice.johnson@example.com
+          phoneNumber:
+            type: string
+            description: Contact's phone number
+            example: '+380000000001'
+          contactType:
+            type: string
+            description: Contact's type
+            enum: [work, home, personal]
+            example: home
+          isFavourite:
+            type: boolean
+            description: Contact's priority
+            example: false
+          photo:
+            type: string
+            description: Contact's photo
+            format: binary
+responses:
+  '201':
+    description: Contact successfully created
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Succesfully created a contact
+            data:
+              $ref: ../../components/schemas/contacts.yaml
+
+  '400':
+    description: Bad Request
+    $ref: ../../components/responses/400.yaml
+  '401':
+    description: Unauthorized
+    $ref: ../../components/responses/401.yaml
+  '500':
+    description: Internal Server Error
+    $ref: ../../components/responses/500.yaml

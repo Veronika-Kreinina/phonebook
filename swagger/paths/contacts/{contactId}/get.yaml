@@ -1,0 +1,53 @@
+tags:
+  - Contacts
+summary: Get contact by id
+operationId: getContactById
+description: |
+  Retrieves a single contact by its unique ID for the authenticated user.
+      Only the owner of the contact can access this resource.
+
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+      description: The unique identifier of the contact to retrieve
+      example: 67f925cbb795599b632edfe0
+responses:
+  '200':
+    description: Successfully get contact by id
+    content:
+      aplication/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contact with id ${contactId}!
+            data:
+              $ref: ../../../components/schemas/contacts.yaml
+  '400':
+    description: Bad Request
+    $ref: ../../../components/responses/400.yaml
+
+  '401':
+    description: Unauthorized
+    $ref: ../../../components/responses/401.yaml
+
+  '404':
+    description: Contact with the specified ID was not found
+    $ref: ../../../components/responses/404.yaml
+
+  '500':
+    description: Internal Server Error
+    $ref: ../../../components/responses/500.yaml

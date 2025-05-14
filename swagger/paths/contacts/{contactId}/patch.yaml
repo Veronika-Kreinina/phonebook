@@ -1,0 +1,77 @@
+tags:
+  - Contacts
+summary: Update a contact (partial)
+operationId: patchContact
+description: |
+  Updates one or more fields of an existing contact.
+  Only the contact's owner can perform this action.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+    example: 661a2cd3c991f1a9fba1dce1
+    description: The ID of the contact to update
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Contact's name
+            example: Jane Doe
+          email:
+            type: string
+            description: Contact's email
+            format: email
+            example: jane.doe@example.com
+          phoneNumber:
+            type: string
+            description: Contact's phone number
+            example: '+380000000001'
+          contactType:
+            type: string
+            description: Contact's type
+            enum: [work, home, personal]
+            example: work
+          isFavourite:
+            type: boolean
+            description: Contact's prio
+            example: true
+          photo:
+            type: string
+            description: Contact's photo
+            format: binary
+responses:
+  '200':
+    description: Contact successfully updated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              $ref: ../../../components/schemas/contacts.yaml
+  '401':
+    description: Unauthorized 
+    $ref: ../../../components/responses/401.yaml
+
+  '404':
+    description: Contact with the specified ID was not found
+    $ref: ../../../components/responses/404.yaml
+
+  '500':
+    description: Internal Server Error
+    $ref: ../../../components/responses/500.yaml
